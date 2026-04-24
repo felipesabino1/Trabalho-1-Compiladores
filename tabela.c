@@ -24,6 +24,8 @@ Tabela* newTabela(){
     }
 
     t->tab = (int*) malloc(sizeof(int) * (mod+1));
+    for(int i=0;i<mod;i++)t->tab[i]=0;
+
     if(!t->tab){
         yyerror("sem espaco de memoria para alocacao");
     }
@@ -36,6 +38,7 @@ void addVar(Tabela* t, char* var, Prod tipo){
     if(!var) yyerror("variavel nao existe");
     if(tipo != TipoINT && tipo != TipoCAR) yyerror("tipo invalido");
     int x = hash(var);
+    if(t->tab[x]) yyerror("variavel redeclarada no mesmo escopo");
     t->tab[x] = tipo;
 }
 

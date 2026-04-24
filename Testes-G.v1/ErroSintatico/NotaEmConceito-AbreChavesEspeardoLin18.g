@@ -16,6 +16,11 @@ da razao. Em seguida computa e imprime a soma dos elementos da progresao */
 			conceito: car;
 		}
 			
+
+
+
+
+			
 			conceito='D';
 			escreva "Conceito: ";
 			escreva conceito;

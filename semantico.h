@@ -1,8 +1,8 @@
 #ifndef __SEMANTICO_H__
 #define __SEMANTICO_H__
 
-#include "tipos.h"
 #include "tabela.h"
+#include "tipos.h"
 
 extern void yyerror(char const *s);
 

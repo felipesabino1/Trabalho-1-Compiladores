@@ -7,7 +7,15 @@ o programa computa e emite o valor do fatorial desse numero.  */
 	{
 		fatorial,i,n:int;
 		fatorial:int;
+
+
+
+
+
+		
 	}
+
+
 	{
 		n=-1;
 		enquanto (n<=0)

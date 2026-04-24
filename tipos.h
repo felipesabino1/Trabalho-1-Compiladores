@@ -36,7 +36,6 @@ Node* newNode2(Prod tipo, char* lexema, Node* f1, Node* f2);
 Node* newNode3(Prod tipo, char* lexema, Node* f1, Node* f2, Node* f3);
 Node* newNode4(Prod tipo, char* lexema, Node* f1, Node* f2, Node* f3, Node* f4);
 
-void dfs(Node* u);
 void limpa(Node* u);
 
 #endif

@@ -3,12 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tipos.h"
+#include "semantico.h"
 
 extern char *yytext;
 extern int yylex();
 extern FILE *yyin;
 extern int yylineno;
 void yyerror(char const *s);
+int yylineno_aux;
 Node* root;
 %}
 
@@ -40,12 +42,12 @@ varsection  : '{' listadeclvar '}'  {$$ = $2;}
 
 listadeclvar    : IDENTIFICADOR declvar ':' tipo ';' listadeclvar   {
     Node* aux = newNode0(Identificador,$1);
-    aux->linha = $2->linha;
+    aux->linha = yylineno_aux;
     $$ = newNode4(LstDeclVar,NULL,aux,$2,$4,$6);
 }
                 | IDENTIFICADOR declvar ':' tipo ';'                {
     Node* aux = newNode0(Identificador,$1);
-    aux->linha = $2->linha;
+    aux->linha = yylineno_aux;
     $$ = newNode3(LstDeclVar,NULL,aux,$2,$4);
 }
 ;
@@ -54,8 +56,8 @@ declvar :                           {$$ = NULL;}
         | ',' IDENTIFICADOR declvar {$$ = newNode2(DeclVar,NULL,newNode0(Identificador,$2),$3);}
 ;
 
-tipo    : INT   {$$ = newNode0(TipoINT,NULL);}
-        | CAR   {$$ = newNode0(TipoCAR,NULL);}
+tipo    : INT   {yylineno_aux = yylineno; $$ = newNode0(TipoINT,NULL);}
+        | CAR   {yylineno_aux = yylineno; $$ = newNode0(TipoCAR,NULL);}
 ;
 
 listacomando    : comando               {$$ = newNode1(LstCmd,NULL,$1);}

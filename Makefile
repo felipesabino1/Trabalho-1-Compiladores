@@ -1,6 +1,6 @@
-CC = gcc-14
-g-v1:  parser.o scanner.o tipos.o
-	$(CC) parser.o scanner.o tipos.o -o g-v1
+CC = gcc
+g-v1:  parser.o scanner.o tipos.o tabela.o semantico.o 
+	$(CC) parser.o scanner.o tipos.o semantico.o tabela.o -o g-v1
 parser.o: parser.c
 	$(CC) -c parser.c -o parser.o
 parser.c:  parser.y
@@ -11,6 +11,10 @@ scanner.c: scanner.l
 	flex  -o scanner.c  scanner.l
 tipos.o: tipos.c
 	$(CC) -c tipos.c -o tipos.o
+semantico.o: semantico.c
+	$(CC) -c semantico.c -o semantico.o
+tabela.o: tabela.c
+	$(CC) -c tabela.c -o tabela.o
 clean:
 	rm *.o  parser.c scanner.c tokens.h
 run:
