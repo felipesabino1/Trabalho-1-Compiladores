@@ -25,7 +25,7 @@ Node* root;
 
 %%
 
-programa    : declrprograma
+programa    : declrprograma 
 ;
 
 declrprograma   : PRINCIPAL bloco   {root = $2;}
@@ -126,6 +126,7 @@ int main(int argc, char **argv){
     yyin = fopen(argv[1], "r");
     if(!yyin) yyerror("Arquivo nao pode ser aberto\n");
     int x = yyparse();
+    semantic(root);
     limpa(root);
     return x;
 }

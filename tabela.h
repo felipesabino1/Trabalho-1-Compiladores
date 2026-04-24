@@ -1,7 +1,6 @@
 #ifndef __TABELA_SIMBOLOS_H__
 #define __TABELA_SIMBOLOS_H__
 
-
 typedef struct tabela{
     int* tab; 
 }Tabela;
