@@ -1,5 +1,4 @@
 #include "tabela.h"
-#include "tipos.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -32,24 +31,6 @@ Tabela* newTabela(){
     return t;
 }
 
-Tabela* addVar(Tabela* t, char* var, int tipo){
-    if(!t){
-        yyerror("TABELA NAO EXISTE");
-    }
-
-    if(!var){
-        yyerror("VARIAVEL NAO EXISTE");
-    }
-
-    if(tipo != TipoINT && tipo != TipoCAR){
-        yyerror("TIPO INVALIDO DE VARIAVEL");
-    }
-
-    int x = hash(var);
-
-    t->tab[x] = tipo;
-}
-
 No* newNode(Tabela* t){
     No* no = (No*) malloc(sizeof(No));
     if(!no){
@@ -69,7 +50,7 @@ Tabelas* newTabelas(){
     tab->tam=0;
 }
 
-Tabelas* push(Tabelas* tab, Tabela* t){
+void push(Tabelas* tab, Tabela* t){
     if(!tab){
         yyerror("TABELA NAO EXISTE");
     }
@@ -81,7 +62,7 @@ Tabelas* push(Tabelas* tab, Tabela* t){
     tab->tam++;
 }
 
-Tabelas* pop(Tabelas* t){
+void pop(Tabelas* t){
     if(!t){
         yyerror("TABELA NAO EXISTE");
     }
