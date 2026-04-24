@@ -4,7 +4,19 @@
 typedef void(*func_ptr)(Node*,Tabelas*)
 
 func_ptr func[] = {
-    &  
+    // Bloco
+    
+    // Declaracoes
+    
+    // Tipo
+    
+    
+    // Comandos
+    
+    // Expr
+    
+    // Tokens
+    
 };
 
 void ()

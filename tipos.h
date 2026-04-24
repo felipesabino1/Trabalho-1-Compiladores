@@ -2,19 +2,25 @@
 #define __TIPOS_H__
 typedef enum{
     // Bloco
-    Bloco=0,BlocoVar,
+    Bloco=0,
+    BlocoVar,
     // Declaracoes
-    LstDeclVar,DeclVar,
+    LstDeclVar,
+    DeclVar,
     // Tipo
-    TipoINT,TipoCAR,
+    TipoINT,
+    TipoCAR,
     // Comandos
-    LstCmd,Leia,Escreva,Se,Se_Senao,Enquanto,
+    LstCmd,Leia,Escreva,
+    Se,Se_Senao,Enquanto,
     // Expr
     Expr,Expr_Atr,Expr_Ou,Expr_E,Expr_Igual,Expr_Dif,Expr_Menor,
-    Expr_Maior,Expr_MenorIgual,Expr_MaiorIgual,Expr_Add,Expr_Sub,
+    Expr_Maior,
+    Expr_MenorIgual,Expr_MaiorIgual,Expr_Add,Expr_Sub,
     Expr_Mul,Expr_Div,Expr_Minus,Expr_Neg,
     // Tokens
-    Identificador,CarConst,IntConst,CadeiaCar
+    Identificador,CarConst,
+    IntConst,CadeiaCar
 }Prod;
 
 typedef struct Node{
