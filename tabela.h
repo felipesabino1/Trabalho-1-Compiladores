@@ -1,6 +1,8 @@
 #ifndef __TABELA_SIMBOLOS_H__
 #define __TABELA_SIMBOLOS_H__
 
+#include "tipos.h"
+
 typedef struct tabela{
     int* tab; 
 }Tabela;
@@ -20,10 +22,12 @@ int hash(char *s);
 Tabela* newTabela();
 No* newNode(Tabela* t);
 
+void addVar(Tabela* t, char* var, Prod tipo);
+
 Tabelas* newTabelas();
 void pop(Tabelas* t);
 void push(Tabelas* t, Tabela* tab);
 
-int find(Tabelas* tab, char* variavel);
+Prod find(Tabelas* tab, char* variavel);
 
 #endif

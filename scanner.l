@@ -58,7 +58,7 @@ enquanto              	return ENQUANTO;
 "<="                   	return MENORIGUAL;
 ({LETRA}|_)+({LETRA}|{DIGITO}|_)*      	{
 	yylval.lexema = (char*) malloc(yyleng+1);
-	if(!yylval.lexema) yyerror("SEM ESPACO DE MEMORIA PARA ALOCACAO");
+	if(!yylval.lexema) yyerror("sem espaco de memoria para alocacao");
 	strcpy(yylval.lexema,yytext);
 	return IDENTIFICADOR;
 }
@@ -67,7 +67,7 @@ enquanto              	return ENQUANTO;
 <comentario_cond>[^*\n]	/* consome o comentario */
 <comentario_cond>\n 
 <comentario_cond>"*"+[^*/\n]*   /* consome * que nao tem / em sequencia */
-<comentario_cond><<EOF>>	    yyerror("COMENTARIO NAO TERMINA");
+<comentario_cond><<EOF>>	    yyerror("comentario nao termina");
 
 <comentario_cond>"*"+"/"        BEGIN(INITIAL);
 
@@ -78,12 +78,12 @@ enquanto              	return ENQUANTO;
 	BEGIN(INITIAL); 
 	yytext[--yyleng] = '\0'; /* remover a ultima \" */
     yylval.lexema = (char*) malloc(yyleng+1);
-    if(!yylval.lexema) yyerror("SEM ESPACO DE MEMORIA PARA ALOCACAO");
+    if(!yylval.lexema) yyerror("sem espaco de memoria para alocacao");
     strcpy(yylval.lexema,yytext);
 	return CADEIACARACTERES;
 }
-<cadeia_cond>[^"\n]*(\n)+	yyerror("CADEIA DE CARACTERES OCUPA MAIS DE UMA LINHA");
-<cadeia_cond><<EOF>>	    yyerror("CADEIA DE CARACTERES NAO TERMINA");
+<cadeia_cond>[^"\n]*(\n)+	yyerror("cadeia de caracteres ocupa mais de uma linha");
+<cadeia_cond><<EOF>>	    yyerror("cadeia de caracteres nao termina");
 
  /* CARCONST */
 \'                  	BEGIN(car_cond);
@@ -91,7 +91,7 @@ enquanto              	return ENQUANTO;
 	BEGIN(INITIAL); 
 	yytext[--yyleng] = '\0';
     yylval.lexema = (char*) malloc(yyleng+1);
-    if(!yylval.lexema) yyerror("SEM ESPACO DE MEMORIA PARA ALOCACAO");
+    if(!yylval.lexema) yyerror("sem espaco de memoria para alocacao");
     strcpy(yylval.lexema,yytext);
 	return CARCONST; /* caracter sem escape */
 }
@@ -99,18 +99,18 @@ enquanto              	return ENQUANTO;
 	BEGIN(INITIAL); 
 	yytext[--yyleng] = '\0';
     yylval.lexema = (char*) malloc(yyleng+1);
-    if(!yylval.lexema) yyerror("SEM ESPACO DE MEMORIA PARA ALOCACAO");
+    if(!yylval.lexema) yyerror("sem espaco de memoria para alocacao");
     strcpy(yylval.lexema,yytext);
 	return CARCONST; /* caracter com escape */
 }
-<car_cond>\n		    yyerror("CARCONST OCUPA MAIS DE UMA LINHA");
-<car_cond>\'		    yyerror("CARCONST VAZIO");
-<car_cond>[^\'\n]+\'    yyerror("CARCONST COM MAIS DE UM CARACTER");
-<car_cond><<EOF>>	    yyerror("CARCONST NAO TERMINA");
+<car_cond>\n		    yyerror("carconst ocupa mais de uma linha");
+<car_cond>\'		    yyerror("carconst vazio");
+<car_cond>[^\'\n]+\'    yyerror("carconst com mais de um caracter");
+<car_cond><<EOF>>	    yyerror("carconst nao termina");
 
 {DIGITO}+       {
     yylval.lexema = (char*) malloc(yyleng+1);
-    if(!yylval.lexema) yyerror("SEM ESPACO DE MEMORIA PARA ALOCACAO");
+    if(!yylval.lexema) yyerror("sem espaco de memoria para alocacao");
     strcpy(yylval.lexema,yytext);
     return INTCONST;
 }
@@ -118,7 +118,7 @@ enquanto              	return ENQUANTO;
 <<EOF>>	return(EOF);
 [ \t]+ /* espaco inutil */
 \n 
-.   yyerror("CARACTERE INVALIDO");
+.   yyerror("caracter invalido");
 %%
 
 int yywrap(){return 1;}

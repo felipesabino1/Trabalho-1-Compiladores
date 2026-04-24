@@ -20,21 +20,29 @@ int hash(char* s){
 Tabela* newTabela(){
     Tabela* t = (Tabela*) malloc(sizeof(Tabela));
     if(!t){
-        yyerror("SEM ESPACO DE MEMORIA PARA ALOCACAO");
+        yyerror("sem espaco de memoria para alocacao");
     }
 
     t->tab = (int*) malloc(sizeof(int) * (mod+1));
     if(!t->tab){
-        yyerror("SEM ESPACO DE MEMORIA PARA ALOCACAO");
+        yyerror("sem espaco de memoria para alocacao");
     }
     
     return t;
 }
 
+void addVar(Tabela* t, char* var, Prod tipo){
+    if(!t) yyerror("tabela de simbolos nao existe");
+    if(!var) yyerror("variavel nao existe");
+    if(tipo != TipoINT && tipo != TipoCAR) yyerror("tipo invalido");
+    int x = hash(var);
+    t->tab[x] = tipo;
+}
+
 No* newNode(Tabela* t){
     No* no = (No*) malloc(sizeof(No));
     if(!no){
-        yyerror("SEM ESPACO DE MEMORIA PARA ALOCACAO");
+        yyerror("sem espaco de memoria para alocacao");
     }
 
     no->tab=t;
@@ -44,7 +52,7 @@ No* newNode(Tabela* t){
 Tabelas* newTabelas(){
     Tabelas* tab = (Tabelas*) malloc(sizeof(Tabelas));
     if(!tab){
-        yyerror("SEM ESPACO DE MEMORIA PARA ALOCACAO");
+        yyerror("sem espaco de memoria para alocacao");
     }
     tab->last=NULL;
     tab->tam=0;
@@ -52,7 +60,7 @@ Tabelas* newTabelas(){
 
 void push(Tabelas* tab, Tabela* t){
     if(!tab){
-        yyerror("TABELA NAO EXISTE");
+        yyerror("tabela de simbolos nao existe");
     }
 
     No* no = newNode(t);
@@ -64,10 +72,10 @@ void push(Tabelas* tab, Tabela* t){
 
 void pop(Tabelas* t){
     if(!t){
-        yyerror("TABELA NAO EXISTE");
+        yyerror("tabela de simbolos nao existe");
     }
     if(t->tam==0){
-        yyerror("TABELA VAZIA");
+        yyerror("tabela de simbolos esta vazia");
     }
 
     No* no = t->last;
@@ -75,7 +83,7 @@ void pop(Tabelas* t){
     free(no);
 }
 
-int find(Tabelas* tab, char* variavel){
+Prod find(Tabelas* tab, char* variavel){
     int x = hash(variavel);
     No* at = tab->last;
 
