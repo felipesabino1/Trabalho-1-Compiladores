@@ -1,6 +1,7 @@
 #ifndef __TABELA_SIMBOLOS_H__
 #define __TABELA_SIMBOLOS_H__
 
+
 typedef struct tabela{
     int* tab; 
 }Tabela;
@@ -16,6 +17,8 @@ typedef struct tabelas{
 } Tabelas;
 
 int hash(char *s);
+
+Tabela* addVar(Tabela* t, char* var, int tipo);
 
 Tabela* newTabela();
 No* newNode(Tabela* t);
