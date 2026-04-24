@@ -3,7 +3,6 @@
 #include <string.h>
 #include "tipos.h"
 
-extern char msg[500];
 extern int yylineno;
 extern void yyerror(char const* s);
 char* tipoLiteral[] = {
@@ -19,14 +18,11 @@ char* tipoLiteral[] = {
 
 Node* newNode4(Prod tipo, char* lexema, Node* f1, Node* f2, Node* f3, Node* f4){
     Node* node = (Node*) malloc(sizeof(Node));
-    if(!node){
-        strcpy(msg,"SEM ESPACO DE MEMORIA PARA ALOCACAO");
-        yyerror(msg);
-    }
+    if(!node) yyerror("SEM ESPACO DE MEMORIA PARA ALOCACAO");
     node->tipo = tipo;
     node->linha = yylineno;
     node->lexema = lexema;
-    node->f[0] = f1; node->f[1] = f2; node->f[2] = f3; node->f[3] = f4;
+    node->f[0] = f1, node->f[1] = f2, node->f[2] = f3, node->f[3] = f4;
     return node;
 }
 
@@ -53,10 +49,6 @@ void dfs(Node* u){
 void limpa(Node* u){
     if(u == NULL) return;
     for(int i=0; i<4; i++) limpa(u->f[i]);
-    if(u->lexema){
-        printf("%p %d: ",u->lexema,u->linha);
-        printf("%s\n",u->lexema);
-    }
-    // if(u->lexema) free(u->lexema);
+    if(u->lexema) free(u->lexema);
     free(u);
 }

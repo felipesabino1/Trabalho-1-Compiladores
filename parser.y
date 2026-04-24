@@ -8,7 +8,6 @@ extern char *yytext;
 extern int yylex();
 extern FILE *yyin;
 extern int yylineno;
-extern int numLinha;
 void yyerror(char const *s);
 Node* root;
 %}
@@ -127,7 +126,6 @@ int main(int argc, char **argv){
     yyin = fopen(argv[1], "r");
     if(!yyin) yyerror("Arquivo nao pode ser aberto\n");
     int x = yyparse();
-    dfs(root);
     limpa(root);
     return x;
 }
