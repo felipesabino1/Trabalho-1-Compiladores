@@ -5,16 +5,6 @@
 
 extern int yylineno;
 extern void yyerror(char const* s);
-// char* tipoLiteral[] = {
-//     "Bloco","BlocoVar",
-//     "LstDeclVar","DeclVar",
-//     "TipoINT","TipoCAR",
-//     "LstCmd","Leia","Escreva","Se","Se_Senao","Enquanto",
-//     "Expr","Expr_Atr","Expr_Ou","Expr_E","Expr_Igual","Expr_Dif","Expr_Menor",
-//     "Expr_Maior","Expr_MenorIgual","Expr_MaiorIgual","Expr_Add","Expr_Sub",
-//     "Expr_Mul","Expr_Div","Expr_Minus","Expr_neg",
-//     "Identificador","CarConst","IntConst","CadeiaCar"
-// };
 
 Node* newNode4(Prod tipo, char* lexema, Node* f1, Node* f2, Node* f3, Node* f4){
     Node* node = (Node*) malloc(sizeof(Node));

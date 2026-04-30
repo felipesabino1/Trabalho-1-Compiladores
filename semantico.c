@@ -27,7 +27,6 @@ char* tipoLiteral[] = {
 void dfs(Node* u, Tabelas* tab){
     if(!u) return;
     yylineno = u->linha;
-    // printf("%s\n",tipoLiteral[u->tipo]);
     if(u->tipo == Bloco){
         dfs(u->f[0],tab);
     }else if(u->tipo == BlocoVar){
@@ -79,32 +78,27 @@ void semanticDeclVar(Node* u, Tabelas* tab, Prod tipo){
 
 //Expr intermediarias (do parser)
 Prod inter_expr(Node*u, Tabelas* tab){
-    // printf("%s\n", __func__);
     if(u->tipo == Expr_Atr) return semanticExpr_Atr(u, tab);
     return inter_orexpr(u, tab);
 }
 
 Prod inter_orexpr(Node* u, Tabelas* tab){
-    // printf("%s\n", __func__);
     if(u->tipo == Expr_Ou) return semanticExpr_Ou(u, tab);
     return inter_andexpr(u, tab);
 }
 
 Prod inter_andexpr(Node* u, Tabelas* tab){
-    // printf("%s\n", __func__);
     if(u->tipo == Expr_E) return semanticExpr_E(u, tab);
     return inter_eqexpr(u, tab);
 }
 
 Prod inter_eqexpr(Node* u, Tabelas* tab){
-    // printf("%s\n", __func__);
     if(u->tipo == Expr_Igual) return semanticExpr_Igual(u, tab);
     if(u->tipo == Expr_Dif) return semanticExpr_Dif(u, tab);
     return inter_desigexpr(u, tab);
 }
 
 Prod inter_desigexpr(Node* u, Tabelas* tab){
-    // printf("%s\n", __func__);
     if(u->tipo == Expr_Menor) return semanticExpr_Menor(u, tab);
     if(u->tipo == Expr_Maior) return semanticExpr_Maior(u, tab);
     if(u->tipo == Expr_MaiorIgual) return semanticExpr_MaiorIgual(u,tab);
@@ -113,7 +107,6 @@ Prod inter_desigexpr(Node* u, Tabelas* tab){
 }
 
 Prod inter_addexpr(Node* u, Tabelas* tab){
-    // printf("%s\n", __func__);
     if(u->tipo == Expr_Add) return semanticExpr_Add(u, tab);
     if(u->tipo == Expr_Sub) return semanticExpr_Sub(u, tab);
     return inter_mulexpr(u, tab);
@@ -132,13 +125,8 @@ Prod inter_unexpr(Node* u, Tabelas* tab){
 }
 
 Prod inter_primexpr(Node* u, Tabelas* tab){
-    // printf("%s\n", __func__);
-    // printf("%s\n", tipoLiteral[u->tipo]);
-    // if(u->tipo == Identificador) printf("lexema: %s\n", u->lexema);
-    // printf("\n\n");
     if(u->tipo == Identificador) {
         Prod cara = semanticIdentificador(u, tab);
-        // printf("cara = %s\n", tipoLiteral[cara]);
         return cara;
     }
     if(u->tipo == CarConst) return semanticCarConst(u, tab);
@@ -152,8 +140,6 @@ Prod semanticExpr(Node* u, Tabelas*tab){
 }
 
 Prod semanticExpr_Atr(Node *u, Tabelas* tab){
-    // printf("Atribuicao\n");
-    // printf("%p %p\n",u->f[0],u->f[1]);
     char* var_esq = u->f[0]->lexema;
     Prod tipo_esq = find(tab, var_esq);
 
@@ -209,9 +195,6 @@ Prod semanticExpr_Maior(Node*u, Tabelas* tab){
 }
 
 Prod semanticExpr_MenorIgual(Node*u, Tabelas* tab){
-
-    // printf("%s\n", tipoLiteral[u->tipo]);
-
     Prod tipo_esq = inter_desigexpr(u->f[0],tab);
     Prod tipo_dir = inter_addexpr(u->f[1],tab);
     if(tipo_esq != tipo_dir) yyerror("operacao com tipos distintos");
@@ -278,11 +261,6 @@ Prod semanticCarConst(Node*u, Tabelas * tab){
 }
 
 Prod semanticIntConst(Node*u, Tabelas * tab){
-
-    // printf("\n\nINT CONST:\n");
-    // printf("TIPO : %s\n", tipoLiteral[u->tipo]);
-    // printf("LEXEMA: %s\n", u->lexema);
-
     return TipoINT;
 }   
 
