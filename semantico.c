@@ -156,8 +156,6 @@ Prod semanticExpr_Atr(Node *u, Tabelas* tab){
     // printf("%p %p\n",u->f[0],u->f[1]);
     char* var_esq = u->f[0]->lexema;
     Prod tipo_esq = find(tab, var_esq);
-    // printf("foi\n");
-    if(!tipo_esq) yyerror("variavel nao declarada");
 
     Prod tipo_dir = inter_expr(u->f[1], tab);
     
@@ -271,7 +269,9 @@ Prod semanticExpr_Neg(Node*u, Tabelas* tab){
 
 //Tokens
 Prod semanticIdentificador(Node*u, Tabelas * tab){
-    return find(tab, u->lexema);
+    int x = find(tab,u->lexema);
+    if(!x) yyerror("variavel nao declarada");
+    return x;
 }
 
 Prod semanticCarConst(Node*u, Tabelas * tab){
