@@ -270,7 +270,6 @@ Prod semanticExpr_Neg(Node*u, Tabelas* tab){
 //Tokens
 Prod semanticIdentificador(Node*u, Tabelas * tab){
     int x = find(tab,u->lexema);
-    if(!x) yyerror("variavel nao declarada");
     return x;
 }
 

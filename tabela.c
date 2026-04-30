@@ -98,6 +98,6 @@ Prod find(Tabelas* tab, char* variavel){
 
         at=at->prev;
     }
-
+    yyerror("variavel nao declarada");
     return 0;
 }
