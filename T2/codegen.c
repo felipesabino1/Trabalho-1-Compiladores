@@ -6,6 +6,7 @@
 extern int yylineno;
 int label_count = 0;
 int loop_label_count = 0;
+char current_func_name[256] = "";
 
 int new_label() { return ++label_count; }
 
@@ -138,9 +139,6 @@ void cgen_Expr(Node* u, Tabelas* tab) {
         cgen_LValue(u, tab);
         printf("\tlw $s0, 0($t2)\n");
     } else if(u->tipo == Call_Node || u->tipo == CallEmpty_Node) {
-        // Alloc ret
-        printf("\taddiu $sp, $sp, -4\n");
-        
         int num_args = 0;
         void cgen_args(Node* args) {
             if(!args) return;
@@ -180,8 +178,7 @@ void cgen_Expr(Node* u, Tabelas* tab) {
         
         printf("\tjal func_%s\n", u->f[0]->lexema);
         if(num_args > 0) printf("\taddiu $sp, $sp, %d\n", 4 * num_args);
-        printf("\tlw $s0, 4($sp)\n"); // get ret value
-        printf("\taddiu $sp, $sp, 4\n");
+        printf("\tmove $s0, $v0\n"); // get ret value
         
     } else if(u->tipo == Expr_Atr_Node) {
         cgen_Expr(u->f[1], tab); // s0 = val
@@ -236,9 +233,8 @@ void cgen_Cmd(Node* u, Tabelas* tab) {
         cgen_Expr(u->f[0], tab);
     } else if(u->tipo == Retorne_Node) {
         cgen_Expr(u->f[0], tab);
-        // Coloca no RA: a posicao de retorno e $fp + 8 + 4*num_params
-        // Vamos usar um label especial para sair da funcao
-        printf("\tb Func_Epilogue\n"); // Vai precisar gerenciar isso localmente!
+        printf("\tmove $v0, $s0\n");
+        printf("\tb Func_Epilogue_%s\n", current_func_name);
     } else if(u->tipo == Leia_Node) {
         printf("\tli $v0, 5\n");
         printf("\tsyscall\n");
@@ -347,12 +343,13 @@ void cgen_DeclFuncs(Node* u, Tabelas* tab) {
         
         printf("\n\t.text\n");
         printf("func_%s:\n", nome);
+        strcpy(current_func_name, nome);
         
         // Prologue
+        printf("\taddiu $sp, $sp, -4\n");
         printf("\tsw $ra, 0($sp)\n");
         printf("\taddiu $sp, $sp, -4\n");
         printf("\tsw $fp, 0($sp)\n");
-        printf("\taddiu $sp, $sp, -4\n");
         printf("\tmove $fp, $sp\n");
         
         Tabela* t = newTabela();
@@ -371,7 +368,7 @@ void cgen_DeclFuncs(Node* u, Tabelas* tab) {
             strcpy(s->nome, param->f[0]->lexema);
             s->tipo = param->f[1]->tipo;
             s->cat = (param->tipo == Param_Node) ? CAT_PARAM : CAT_PARAM_VETOR;
-            offset -= 4; // ArgN ta mais perto do fp
+            offset -= 4; 
             s->endereco = offset + 4; 
             inserir_simbolo(t, s);
             args = args->f[1];
@@ -381,14 +378,12 @@ void cgen_DeclFuncs(Node* u, Tabelas* tab) {
         cgen_Bloco(func->f[3], tab);
         
         // Epilogue
-        printf("Func_Epilogue:\n");
-        // salva retorno: end = 8 + 4*num_args
-        printf("\tsw $s0, %d($fp)\n", 8 + 4 * num_args);
+        printf("Func_Epilogue_%s:\n", current_func_name);
         
         printf("\tmove $sp, $fp\n");
-        printf("\tlw $fp, 4($sp)\n");
+        printf("\tlw $fp, 0($sp)\n");
         printf("\taddiu $sp, $sp, 4\n");
-        printf("\tlw $ra, 4($sp)\n");
+        printf("\tlw $ra, 0($sp)\n");
         printf("\taddiu $sp, $sp, 4\n");
         printf("\tjr $ra\n");
         
