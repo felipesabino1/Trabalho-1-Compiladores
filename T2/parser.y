@@ -40,7 +40,6 @@ DeclVarGlobais : GLOBAL VarSection { $$ = newNode1(DeclVarGlobais_Node, NULL, $2
 ;
 
 VarSection : '[' ListaDeclVar ']' { $$ = newNode1(VarSection_Node, NULL, $2); }
-           | '{' ListaDeclVar '}' { $$ = newNode1(VarSection_Node, NULL, $2); }
 ;
 
 ListaDeclVar : ListVar ':' Tipo ';' ListaDeclVar { $$ = newNode3(LstDeclVar_Node, NULL, $1, $3, $5); }
