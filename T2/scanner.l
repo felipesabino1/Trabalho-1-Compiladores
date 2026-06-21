@@ -60,7 +60,7 @@ enquanto               return ENQUANTO;
 
 ({LETRA}|_)+({LETRA}|{DIGITO}|_)*      	{
 	yylval.lexema = (char*) malloc(yyleng+1);
-	if(!yylval.lexema) yyerror("sem espaco de memoria para alocacao");
+	if(!yylval.lexema) yyerror("sem espaco de memoria");
 	strcpy(yylval.lexema,yytext);
 	return IDENTIFICADOR;
 }
@@ -77,7 +77,7 @@ enquanto               return ENQUANTO;
 	BEGIN(INITIAL); 
 	yytext[--yyleng] = '\0'; 
     yylval.lexema = (char*) malloc(yyleng+1);
-    if(!yylval.lexema) yyerror("sem espaco");
+    if(!yylval.lexema) yyerror("sem espaco de memeoria");
     strcpy(yylval.lexema,yytext);
 	return CADEIACARACTERES;
 }
@@ -89,7 +89,7 @@ enquanto               return ENQUANTO;
 	BEGIN(INITIAL); 
 	yytext[--yyleng] = '\0';
     yylval.lexema = (char*) malloc(yyleng+1);
-    if(!yylval.lexema) yyerror("sem espaco");
+    if(!yylval.lexema) yyerror("sem espaco de memoria");
     strcpy(yylval.lexema,yytext);
 	return CARCONST; 
 }
@@ -97,7 +97,7 @@ enquanto               return ENQUANTO;
 	BEGIN(INITIAL); 
 	yytext[--yyleng] = '\0';
     yylval.lexema = (char*) malloc(yyleng+1);
-    if(!yylval.lexema) yyerror("sem espaco");
+    if(!yylval.lexema) yyerror("sem espaco de memoria");
     strcpy(yylval.lexema,yytext);
 	return CARCONST; 
 }
