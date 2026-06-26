@@ -53,7 +53,6 @@ void pop(Tabelas* t){
     if(!t || t->tam==0) yyerror("tabelas vazia");
     No* no = t->last;
     t->last=no->prev;
-    // free memory para simbolos aqui seria ideal
     free(no);
     t->tam--;
 }

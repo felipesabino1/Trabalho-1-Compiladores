@@ -4,7 +4,6 @@
 #include <string.h>
 #include "tipos.h"
 #include "semantico.h"
-#include "codegen.h"
 
 extern char *yytext;
 extern int yylex();
@@ -216,10 +215,9 @@ int main(int argc, char **argv){
     yyin = fopen(argv[1], "r");
     if(!yyin) yyerror("Arquivo nao pode ser aberto\n");
     int x = yyparse();
-    if(x == 0) {
-        if(semantic(root) == 0) {
-            generate_code(root);
-        }
+    int erro = semantic(root);
+    if(!erro){
+        printf("Codigo correto!\n");
     }
     limpa(root);
     return x;

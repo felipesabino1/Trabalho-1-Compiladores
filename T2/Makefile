@@ -3,8 +3,8 @@ CFLAGS = -Wall -g
 
 all: g-v2
 
-g-v2: scanner.o parser.o semantico.o tabela.o tipos.o codegen.o
-	$(CC) $(CFLAGS) -o g-v2 scanner.o parser.o semantico.o tabela.o tipos.o codegen.o -lfl
+g-v2: scanner.o parser.o semantico.o tabela.o tipos.o
+	$(CC) $(CFLAGS) -o g-v2 scanner.o parser.o semantico.o tabela.o tipos.o -lfl
 
 parser.c: parser.y
 	bison -d --header=tokens.h -o parser.c parser.y
@@ -27,8 +27,6 @@ tabela.o: tabela.c tabela.h
 tipos.o: tipos.c tipos.h
 	$(CC) $(CFLAGS) -c tipos.c
 
-codegen.o: codegen.c codegen.h tabela.h tipos.h
-	$(CC) $(CFLAGS) -c codegen.c
 
 clean:
 	rm -f *.o g-v2 parser.c tokens.h scanner.c

@@ -1068,7 +1068,7 @@ YY_RULE_SETUP
 #line 61 "scanner.l"
 {
 	yylval.lexema = (char*) malloc(yyleng+1);
-	if(!yylval.lexema) yyerror("sem espaco de memoria para alocacao");
+	if(!yylval.lexema) yyerror("sem espaco de memoria");
 	strcpy(yylval.lexema,yytext);
 	return IDENTIFICADOR;
 }
@@ -1115,7 +1115,7 @@ YY_RULE_SETUP
 	BEGIN(INITIAL); 
 	yytext[--yyleng] = '\0'; 
     yylval.lexema = (char*) malloc(yyleng+1);
-    if(!yylval.lexema) yyerror("sem espaco");
+    if(!yylval.lexema) yyerror("sem espaco de memeoria");
     strcpy(yylval.lexema,yytext);
 	return CADEIACARACTERES;
 }
@@ -1142,7 +1142,7 @@ YY_RULE_SETUP
 	BEGIN(INITIAL); 
 	yytext[--yyleng] = '\0';
     yylval.lexema = (char*) malloc(yyleng+1);
-    if(!yylval.lexema) yyerror("sem espaco");
+    if(!yylval.lexema) yyerror("sem espaco de memoria");
     strcpy(yylval.lexema,yytext);
 	return CARCONST; 
 }
@@ -1154,7 +1154,7 @@ YY_RULE_SETUP
 	BEGIN(INITIAL); 
 	yytext[--yyleng] = '\0';
     yylval.lexema = (char*) malloc(yyleng+1);
-    if(!yylval.lexema) yyerror("sem espaco");
+    if(!yylval.lexema) yyerror("sem espaco de memoria");
     strcpy(yylval.lexema,yytext);
 	return CARCONST; 
 }
